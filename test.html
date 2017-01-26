@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+<!-- <style src="lemmings.css"media="screen"></style> -->
+
+  <title>Document</title>
+</head>
+<style media="screen">
+
+*{
+  margin: 1px;
+}
+
+  .player, #aim, #door{
+    /*transform: scale(3,3);*/
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering:   -o-crisp-edges;
+
+    z-index: 99;
+
+
+
+  }
+  #background-image{
+    background-image: url('img/lemmings-screens-1000x500.jpg');
+    width: 1000px;
+    height: 500px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering:   -o-crisp-edges;
+
+    /*cursor: none;*/
+    z-index: 0;
+  }
+  p{
+    color: white;
+    font-size:7px;
+  }
+
+
+</style>
+
+
+<body id ="body">
+  <div id="background-image" style="position:absolute; top:0 left0 "></div>
+
+  </div>
+  <script type="text/javascript" src="sprite-object.js"></script>
+  <script type="text/javascript" src="level.js" ></script>
+  <script type="text/javascript" src="lemming.js" ></script>
+  <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var grid = new Grid (20,40,25);
+
+    // level 1
+
+    grid.setRebound(364,387,true);
+    grid.setRebound(404,427,true);
+    grid.setRebound(444,467,true);
+    grid.setRebound(484,507,true);
+    grid.setRebound(642,678,true);
+    grid.setRebound(324,324,true);
+    grid.setRebound(347,347,true);
+    grid.setRebound(602,602,true);
+    grid.setRebound(631,631,true);
+    grid.setRebound(638,638,true);
+    grid.tiles[631].isEnd = true;
+
+    console.log(grid.tiles[370]);
+
+    // grid.isHitting({});
+
+    // test unitaire isIntersectRect
+    // console.log(Grid.prototype.isIntersectRect({
+    //   top: 0,
+    //   right: 9,
+    //   bottom: 9,
+    //   left: 0,
+    // },{
+    //   top: 10,
+    //   right: 10,
+    //   bottom: 20,
+    //   left: 10,
+    // }));
+
+    // all lemmings + sidemove
+
+    var i = 0;
+    var lemmingLeft = 250;
+    var lemmings= [];
+    var x = setInterval(function () {
+      if (i<10) {
+        var lem = new Lemming(lemmingLeft,40,i,grid);
+        lemmings.push(lem);
+        // lemmingLeft = lemmingLeft + 20;
+        lem.animating(0,i,fall,true);
+        lem.movement(0,3);
+        i++;
+        // setTimeout(function () {
+        //   lem.stopMovement();
+        // }, 1500);
+
+      } else {
+        clearInterval(x);
+      }
+    }, 1000);
+
+
+
+  });
+</script>
+</body>
+
+
+</html>
