@@ -99,9 +99,6 @@ Lemming.prototype.animating = function(index, spriteAction, loop){
 };
 
 
-
-
-
 Lemming.prototype.movement = function(x,y) {
   // clearTimeout(this.movementTimeout);
   var index = this.indexAnnimation;
@@ -123,11 +120,12 @@ Lemming.prototype.movement = function(x,y) {
     // console.log(yo.bottom);
     var hitX = this.grid.isHittingX(yo);
     var hitY = this.grid.isHittingY(yo);
+    // console.log(this.grid);
     // console.log(hit);
 
 
 
-    console.log(hitY , hitX , this.x , this.y);
+    // console.log(hitY , hitX , this.x , this.y);
     if (hitY ===  true) {
 
       if (hitX === false) {
@@ -146,7 +144,7 @@ Lemming.prototype.movement = function(x,y) {
 
       } else {
         if (hitX===true) {
-          console.log(hitX,hitY, this.x, this.y, this.state);
+          // console.log(hitX,hitY, this.x, this.y, this.state);
           if (this.state == 'walkingStateRight') {
             this.movement((-3),0);
             this.animateFromState("walkingStateLeft");
@@ -165,11 +163,35 @@ Lemming.prototype.movement = function(x,y) {
 
 };
 
+Lemming.prototype.isIntersectRect = function (rect1,rect2) {
+  return (rect1.right >= rect2.left && rect1.left <= rect2.right) && (rect1.bottom >= rect2.top && rect1.top <= rect2.bottom);
+};
 
 
-
-
-
+ // var mouseDown = function(ev) {
+ //
+ //   aim.style.left = aimSprite[0].sprite.left;
+ //   aim.style.top = aimSprite[0].sprite.top;
+ //
+ //
+ //
+ //   var mouseClic = ev;
+ //   mouseClicX  = mouseClic.clientX;
+ //   mouseClicY  = mouseClic.clientY;
+ //
+ //   var mouseBoundaries = {
+ //     left :  mouseClicX ,
+ //     top : mouseClicY,
+ //     right:  mouseClicX + 45,
+ //     bottom: mouseClicY + 45
+ //   };
+ //
+ //
+ //
+ //   var hit = lemmings.isClicked(mouseBoundaries);
+ //   console.log(hit);
+ //
+ // };
 
 
 
@@ -184,7 +206,7 @@ Lemming.prototype.getBoundaries = function () {
   var annimation = this.currentAnimation[this.indexAnnimation];
 
   return {
-    left : this.x ,
+    left : this.x,
     top : this.y,
     right: this.x + (annimation.size.width+this.moveX),
     bottom: this.y + (annimation.size.height+3),

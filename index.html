@@ -36,7 +36,6 @@
     image-rendering: -moz-crisp-edges;
     image-rendering:   -o-crisp-edges;
 
-    /*cursor: none;*/
     z-index: 0;
   }
   p{
@@ -44,6 +43,7 @@
     font-size:7px;
   }
   body{
+    cursor: none;
 
   }
 
@@ -60,8 +60,8 @@
 
   <script type="text/javascript" src="sprite-object.js"></script>
   <script type="text/javascript" src="level.js" ></script>
-  <script type="text/javascript" src="lemming.js" ></script>
   <script type="text/javascript" src="mouse.js" ></script>
+  <script type="text/javascript" src="lemming.js" ></script>
   <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {
     var grid = new Grid (20,40,25);
@@ -81,6 +81,10 @@
     grid.setRebound(638,638,true);
     // grid.setRebound(332,332,true);
     grid.tiles[631].isEnd = true;
+
+
+
+
 
     // var aimContainer = document.getElementById('mouseContainer');
     // var aim = document.getElementById('aim');
@@ -133,10 +137,12 @@
     var i = 0;
     var lemmingLeft = 250;
     var lemmings= [];
+    // console.log(lemmings);
     var x = setInterval(function () {
-      if (i<2) {
+      if (i<5) {
         var lem = new Lemming(lemmingLeft,100,i,grid);
         lemmings.push(lem);
+        // console.log(lemmings);
         // lemmingLeft = lemmingLeft + 20;
         lem.animating(0,fall,true);
         lem.movement(0,1);
@@ -150,6 +156,42 @@
         clearInterval(x);
       }
     }, 1000);
+
+
+
+    var isClicked = function (boundary) {
+
+      // var boundaries = {
+      //   left :  boundary.clientX,
+      //   top : boundary.clientY,
+      //   right: (boundary.clientX + 45),
+      //   bottom: (boundary.clientX + 45)
+      // };
+
+
+
+      // console.log(boundary.clientX,boundary.clientY);
+      for ( var i = 0; i <= lemmings.length; i++) {
+         var lemming =  lemmings[i] ;
+
+        if (lemming) {
+          var boundaries = lemming.getBoundaries()
+          console.log(boundaries);
+          // console.log(Lemming.prototype.isIntersectRect(boundary, boundaries));
+          console.log(boundaries.top,boundaries.left,boundaries.bottom,boundaries.right);
+          console.log(boundary.top,boundary.left,boundary.bottom,boundary.right);
+          // var boundaries = Lemming.getBoundaries();
+          if(Lemming.prototype.isIntersectRect(boundary, boundaries)) {
+            lem.animating(0,stop,true);
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+
+    window.addEventListener('mousedown' , isClicked);
 
 
 

@@ -22,7 +22,7 @@ var Tile = function(size, x, y, id) {
   this.container.rebound = false;
   // this.container.appendChild(this.numero);
   body.appendChild(this.container);
-  this.container.style.border = '1px solid red';
+  // this.container.style.border = '1px solid red';
   this.x = x;
   this.y = y;
   this.width= size;
@@ -67,7 +67,7 @@ Grid.prototype.setRebound = function (indexMin,indexMax, value) {
   for ( var i = indexMin; i <= indexMax; i++) {
     if (value) {
       this.reboundTiles.push(this.tiles[i]);
-      this.tiles[i].container.style.backgroundColor = 'rgba(0,0,222,0.7)';
+      // this.tiles[i].container.style.backgroundColor = 'rgba(0,0,222,0.7)';
     }
     this.tiles[i].rebound = value;
 

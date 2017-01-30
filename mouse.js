@@ -7,8 +7,9 @@ aimContainer.style.width = aimSprite[0].size.width;
 aimContainer.style.height = aimSprite[0].size.height;
 
 aim.style.position = "absolute";
-aim.style.left = aimSprite[0].sprite.left;
-aim.style.top = aimSprite[0].sprite.top;
+aim.style.left = aimSprite[1].sprite.left;
+aim.style.top = aimSprite[1].sprite.top;
+
 
 // // console.log(aim.style.top);
 // var aimX = 0;
@@ -27,3 +28,14 @@ var mousePosition = function(e) {
 };
 
  window.addEventListener('mousemove',mousePosition);
+
+
+
+
+ var mouseUp = function(ev) {
+   aim.style.left = aimSprite[1].sprite.left;
+   aim.style.top = aimSprite[1].sprite.top;
+
+ };
+
+ window.addEventListener('mouseup' , mouseUp);
