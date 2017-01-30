@@ -22,7 +22,7 @@ var mousePosition = function(e) {
 
     var aimPosition = aimContainer.style.top;
     aimContainer.style.left = (mouseX -20) + "px";
-    aimContainer.style.top = (mouseY + 30) + "px";
+    aimContainer.style.top = (mouseY -15) + "px";
 
 };
 
