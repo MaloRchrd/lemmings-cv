@@ -13,6 +13,7 @@
 
 *{
   margin: 1px;
+
 }
 
   .player, #aim, #door{
@@ -30,6 +31,7 @@
     background-image: url('img/lemmings-screens-1000x500.jpg');
     width: 1000px;
     height: 500px;
+    margin: auto;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering:   -o-crisp-edges;
@@ -40,6 +42,9 @@
   p{
     color: white;
     font-size:7px;
+  }
+  body{
+
   }
 
 
@@ -66,12 +71,14 @@
     grid.setRebound(642,678,true);
     grid.setRebound(324,324,true);
     grid.setRebound(347,347,true);
+    grid.setRebound(307,307,true);
     grid.setRebound(602,602,true);
     grid.setRebound(631,631,true);
     grid.setRebound(638,638,true);
+    // grid.setRebound(332,332,true);
     grid.tiles[631].isEnd = true;
 
-    console.log(grid.tiles[370]);
+    console.log(grid.tiles[347]);
 
     // grid.isHitting({});
 
@@ -94,12 +101,13 @@
     var lemmingLeft = 250;
     var lemmings= [];
     var x = setInterval(function () {
-      if (i<10) {
-        var lem = new Lemming(lemmingLeft,40,i,grid);
+      if (i<2) {
+        var lem = new Lemming(lemmingLeft,100,i,grid);
         lemmings.push(lem);
         // lemmingLeft = lemmingLeft + 20;
-        lem.animating(0,i,fall,true);
-        lem.movement(0,3);
+        lem.animating(0,fall,true);
+        lem.movement(0,1);
+        // lem.animateFromState()
         i++;
         // setTimeout(function () {
         //   lem.stopMovement();

@@ -26,11 +26,12 @@ var Lemming = function(x,y,id, grid) {
   this.container.style.top = y + 'px';
   this.x = x ;
   this.y = y ;
-  this.currentAnimation;
+  this.currentAnimation = 'fall';
   this.indexAnnimation;
   this.animationTimeout;
   this.movementTimeout;
   this.grid = grid;
+  this.state = 'fallState';
 };
 
 
@@ -74,7 +75,7 @@ Lemming.prototype.reverseScale = function() {
 ----------------doBetter------------------
 */
 
-Lemming.prototype.animating = function(index,id, spriteAction, loop){
+Lemming.prototype.animating = function(index, spriteAction, loop){
  this.currentAnimation = spriteAction;
  this.indexAnnimation = index;
 
@@ -88,10 +89,10 @@ Lemming.prototype.animating = function(index,id, spriteAction, loop){
 
   this.animationTimeout = window.setTimeout(function(){
    if(spriteAction[index+1]){
-     this.animating(index + 1,id, spriteAction, loop);
+     this.animating(index + 1, spriteAction, loop);
    }else{
      if (loop) {
-       this.animating(0,id, spriteAction,loop);
+       this.animating(0, spriteAction,loop);
      }
    }
 }.bind(this), 200);
@@ -105,32 +106,74 @@ Lemming.prototype.movement = function(x,y) {
   // clearTimeout(this.movementTimeout);
   var index = this.indexAnnimation;
   this.stopMovement();
+
   this.x += x;
   this.y += y;
+
+  this.moveX = x;
+  this.moveY = y;
+
 
   this.movementTimeout = setTimeout(function () {
     this.container.style.left = this.x + 'px';
     this.container.style.top = this.y + 'px';
     // console.log(this.getBoundaries());
     var yo = this.getBoundaries();
+
     // console.log(yo.bottom);
-    var hit = this.grid.isHitting(yo);
+    var hitX = this.grid.isHittingX(yo);
+    var hitY = this.grid.isHittingY(yo);
     // console.log(hit);
 
-    if(hit===false){
-      console.log('yo');
-      this.movement(x,y);
-      // this.animating(0,index,walk,true);
-    }else{ if (hit===true) {
-      this.movement(3,0);
-      this.animating(0,index,walk,true);
-    }
 
-    }
 
+    console.log(hitY , hitX , this.x , this.y);
+    if (hitY ===  true) {
+      
+      if (hitX === false) {
+        this.animateFromState(this.state);
+        if (this.state == 'fallState') {
+          this.movement(3,0);
+          this.animateFromState('walkingStateRight');
+        }else {
+          if (this.state == 'walkingStateRight') {
+            this.movement(3,0);
+          }
+          if (this.state == 'walkingStateLeft') {
+            this.movement(-3,0);
+          }
+        }
+
+      } else {
+        if (hitX===true) {
+          console.log(hitX,hitY, this.x, this.y, this.state);
+          if (this.state == 'walkingStateRight') {
+            this.movement((-3),0);
+            this.animateFromState("walkingStateLeft");
+
+          } else {
+            this.animateFromState("walkingStateRight");
+            this.movement(3,0);
+          }
+        }
+      }
+    } else {
+      this.animateFromState('fallState');
+      this.movement(0,2);
+    }
   }.bind(this), 50);
 
 };
+
+
+
+
+
+
+
+
+
+
 
 Lemming.prototype.stopMovement = function(x,y) {
   clearTimeout(this.movementTimeout);
@@ -141,11 +184,44 @@ Lemming.prototype.getBoundaries = function () {
   var annimation = this.currentAnimation[this.indexAnnimation];
 
   return {
-    left : this.x,
+    left : this.x ,
     top : this.y,
-    right: this.x + annimation.size.width,
-    bottom: this.y + annimation.size.height
+    right: this.x + (annimation.size.width+this.moveX),
+    bottom: this.y + (annimation.size.height+3),
+    head: this.y + (annimation.size.height*0.66)
   };
+};
+
+
+Lemming.prototype.animateFromState = function (state) {
+    if (state != this.state){
+
+      this.state = state ;
+      if (this.state == 'walkingStateRight'){
+        this.container.style.transform = "scale(1,1)";
+        this.animating(0,walk,true);
+
+      }
+      if (this.state == 'walkingStateLeft'){
+        this.container.style.transform = "scale(-1,1)";
+        this.animating(0,walk,true);
+
+      }
+      if (state == 'fallState'){
+        this.animating(0,fall,true);
+      }
+      if (state == 'stopState'){
+        this.animating(0,stop,true);
+        // Todo rajouter la fonctionnalité hittable/rebound.
+      }
+      if (state == 'endState'){
+        this.animating(0,finish,false);
+      }
+      if (state == 'killState'){
+        this.movement(0,0);
+        this.animating(0,kill,true);
+      }
+    }
 };
 
 
