@@ -129,7 +129,7 @@ Lemming.prototype.movement = function(x,y) {
 
     console.log(hitY , hitX , this.x , this.y);
     if (hitY ===  true) {
-      
+
       if (hitX === false) {
         this.animateFromState(this.state);
         if (this.state == 'fallState') {
@@ -212,7 +212,7 @@ Lemming.prototype.animateFromState = function (state) {
       }
       if (state == 'stopState'){
         this.animating(0,stop,true);
-        // Todo rajouter la fonctionnalité hittable/rebound.
+        his.movement(0,0);
       }
       if (state == 'endState'){
         this.animating(0,finish,false);

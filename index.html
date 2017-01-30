@@ -17,7 +17,7 @@
 }
 
   .player, #aim, #door{
-    /*transform: scale(3,3);*/
+    transform: scale(3,3);
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering:   -o-crisp-edges;
@@ -53,11 +53,15 @@
 
 <body id ="body">
   <div id="background-image" style="position:absolute; top:0 left0 "></div>
-
   </div>
+  <div id="mouseContainer">
+    <img src="lemming-sprite.png" id="aim" alt="sprite aim" />
+  </div>
+
   <script type="text/javascript" src="sprite-object.js"></script>
   <script type="text/javascript" src="level.js" ></script>
   <script type="text/javascript" src="lemming.js" ></script>
+  <script type="text/javascript" src="mouse.js" ></script>
   <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {
     var grid = new Grid (20,40,25);
@@ -78,7 +82,8 @@
     // grid.setRebound(332,332,true);
     grid.tiles[631].isEnd = true;
 
-    console.log(grid.tiles[347]);
+    // var aimContainer = document.getElementById('mouseContainer');
+    // var aim = document.getElementById('aim');
 
     // grid.isHitting({});
 
@@ -96,6 +101,34 @@
     // }));
 
     // all lemmings + sidemove
+
+
+    // var openDoor = function(index){
+    //   doorContainer.style.width = door[index].size.width;
+    //   doorContainer.style.height = door[index].size.height;
+    //
+    //   doorImage.style.left = door[index].sprite.left;
+    //   doorImage.style.top = door[index].sprite.top;
+    //
+
+
+      // var doorImage = document.getElementById('door');
+      // doorImage.style.position = "absolute";
+      //
+      // var doorContainer = document.getElementById('doorContainer');
+      // doorContainer.style.position = "absolute";
+      // doorContainer.style.overflow = "hidden";
+      // doorContainer.style.top = "80px";
+      // doorContainer.style.left = "240px";
+      // doorContainer.style.transform = "scale(1, 1)";
+
+
+    //   var animate = window.setTimeout(function(){
+    //     if(door[index+1]){
+    //       openDoor(index + 1);
+    //     }
+    //   }, 300);
+    // };
 
     var i = 0;
     var lemmingLeft = 250;
